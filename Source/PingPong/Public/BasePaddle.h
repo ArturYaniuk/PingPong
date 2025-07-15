@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "BasePaddle.generated.h"
@@ -46,11 +47,20 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* BoxComponent;
+
 	UFUNCTION(Server, Reliable)
 	void Server_SendMovement(FVector NewLocation);
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void Multicast_ReplicateMovement(FVector NewLocation);
+
+	UPROPERTY(EditAnywhere, Category="Movement Limits")
+	float MinY = -200.f;
+
+	UPROPERTY(EditAnywhere, Category="Movement Limits")
+	float MaxY = 200.f;
 
 public:
 	// Sets default values for this pawn's properties

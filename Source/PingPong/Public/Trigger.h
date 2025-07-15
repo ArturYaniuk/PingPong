@@ -14,9 +14,13 @@ class PINGPONG_API ATrigger : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
+	virtual void Tick(float DeltaTime) override;
 	// Sets default values for this actor's properties
 	ATrigger();
+
+	UPROPERTY(EditAnywhere, Category="Score")
+	int32 PlayerIndex;
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,14 +28,6 @@ protected:
 
 	UFUNCTION()
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-	virtual void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 	
 private:
 	UPROPERTY(VisibleAnywhere)

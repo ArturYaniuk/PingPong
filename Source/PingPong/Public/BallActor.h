@@ -19,7 +19,9 @@ public:
 protected:
     UPROPERTY(VisibleAnywhere)
     UStaticMeshComponent* BallMesh;
-    USphereComponent* BallCollison;
+    
+    UPROPERTY(VisibleAnywhere)
+    USphereComponent* BallCollision;
     FVector BallVelocity;
 
     UPROPERTY(EditAnywhere, Category = "Ball")

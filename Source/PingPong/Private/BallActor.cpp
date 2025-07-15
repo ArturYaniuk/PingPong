@@ -9,8 +9,10 @@ ABallActor::ABallActor()
     bReplicates = true;
     AActor::SetReplicateMovement(true);
     BallMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BallMesh"));
-    BallCollison = CreateDefaultSubobject<USphereComponent>(TEXT("BallCollision"));
+    BallCollision = CreateDefaultSubobject<USphereComponent>(TEXT("BallCollision"));
     RootComponent = BallMesh;
+
+    BallCollision->SetupAttachment(BallMesh);
 
     BallMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     BallMesh->SetCollisionProfileName(TEXT("BlockAll"));

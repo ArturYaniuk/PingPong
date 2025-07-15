@@ -3,6 +3,7 @@
 
 #include "PingPong/Public/BasePaddle.h"
 #include "Camera/CameraComponent.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -13,6 +14,8 @@ void ABasePaddle::MoveRight(float Value)
 	{
 		FVector Offset = GetActorRightVector() * Value * MovementComponent->MaxSpeed * GetWorld()->GetDeltaSeconds();
 		FVector NewLocation = GetActorLocation() + Offset;
+
+		NewLocation.Y = FMath::Clamp(NewLocation.Y, MinY, MaxY);
 
 		SetActorLocation(NewLocation);
 		Server_SendMovement(NewLocation);
@@ -43,7 +46,9 @@ ABasePaddle::ABasePaddle()
 
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
 	Mesh1P = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CharacterMesh1P"));
-	RootComponent = Mesh1P;
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision box"));
+	RootComponent = BoxComponent;
+	Mesh1P->SetupAttachment(RootComponent);
 
 	MovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MovementComponent"));
 	MovementComponent->MaxSpeed = 600.f;
@@ -54,6 +59,8 @@ ABasePaddle::ABasePaddle()
 
 	bReplicates = true;
     AActor::SetReplicateMovement(true);
+
+	
 
 }
 

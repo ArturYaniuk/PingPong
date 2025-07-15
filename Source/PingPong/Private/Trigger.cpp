@@ -3,6 +3,10 @@
 
 #include "PingPong/Public/Trigger.h"
 
+#include "BallActor.h"
+#include "GamePongModeBase.h"
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 ATrigger::ATrigger()
 {
@@ -11,7 +15,12 @@ ATrigger::ATrigger()
 
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(FName("CollisionBox"));
-	CollisionBox->SetupAttachment(RootComponent);
+	RootComponent = CollisionBox;
+
+	CollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	CollisionBox->SetCollisionResponseToAllChannels(ECR_Ignore);
+	CollisionBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	CollisionBox->SetGenerateOverlapEvents(true);
 }
 
 // Called when the game starts or when spawned
@@ -25,11 +34,18 @@ void ATrigger::BeginPlay()
 void ATrigger::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-}
+	if (ABallActor* Ball = Cast<ABallActor>(OtherActor))
+	{
+		AGamePongModeBase* GM = Cast<AGamePongModeBase>(UGameplayStatics::GetGameMode(this));
+		if (GM)
+		{
+			GM->AddScore(PlayerIndex);
 
-void ATrigger::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-                                  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
+			OtherActor->Destroy();
+
+			GM->SpawnNewBall();
+		}
+	}
 }
 
 // Called every frame
