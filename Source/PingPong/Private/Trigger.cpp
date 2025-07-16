@@ -40,9 +40,7 @@ void ATrigger::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 		if (GM)
 		{
 			GM->AddScore(PlayerIndex);
-
 			OtherActor->Destroy();
-
 			GM->SpawnNewBall();
 		}
 	}

@@ -22,7 +22,6 @@ void AGamePongModeBase::OnConstruction(const FTransform& Transform)
 void AGamePongModeBase::StartMatch()
 {
     SpawnNewBall();
-
 }
 
 void AGamePongModeBase::AddScore(int32 PlayerIndex)
@@ -83,12 +82,10 @@ APawn* AGamePongModeBase::SpawnDefaultPawnAtTransform_Implementation(AController
 
 AActor* AGamePongModeBase::ChoosePlayerStart_Implementation(AController* Player)
 {
- 
     int32 PlayerIndex = GameState->PlayerArray.IndexOfByKey(Player->PlayerState);
 
     FString DesiredTag = (PlayerIndex == 0) ? TEXT("Player1") : TEXT("Player2");
-
-    // Шукаємо PlayerStart з відповідним тегом
+    
     for (APlayerStart* Start : TActorRange<APlayerStart>(GetWorld()))
     {
         if (Start->PlayerStartTag == FName(*DesiredTag))
@@ -96,7 +93,6 @@ AActor* AGamePongModeBase::ChoosePlayerStart_Implementation(AController* Player)
             return Start;
         }
     }
-
 
     return Super::ChoosePlayerStart_Implementation(Player);
 }

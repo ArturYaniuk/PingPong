@@ -61,7 +61,5 @@ void ABallActor::OnBallHit(UPrimitiveComponent* HitComp, AActor* OtherActor,
     FVector Reflected = BallVelocity - 2.f * FVector::DotProduct(BallVelocity, Normal) * Normal;
 
     BallVelocity = Reflected.GetSafeNormal() * BallSpeed;
-
-    UE_LOG(LogTemp, Warning, TEXT("Reflected Velocity: %s (Hit from %s)"), *BallVelocity.ToString(), *OtherActor->GetName());
 }
 

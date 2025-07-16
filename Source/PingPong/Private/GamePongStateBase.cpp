@@ -19,7 +19,6 @@ void AGamePongStateBase::AddScore(int32 PlayerIndex)
 void AGamePongStateBase::OnRep_ScoreChanged()
 {
 	UE_LOG(LogTemp, Log, TEXT("Score updated: %d : %d"), PlayerScores[0], PlayerScores[1]);
-	
 }
 
 FString AGamePongStateBase::GetFormattedScore() const

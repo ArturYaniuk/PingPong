@@ -31,8 +31,6 @@ private:
     UPROPERTY(EditAnywhere, Category="UI")
     TSubclassOf<UUserWidget> MainMenuClass;
 
-    
-
     UPROPERTY()
     UUserWidget* ScoreUIInstance;
 };

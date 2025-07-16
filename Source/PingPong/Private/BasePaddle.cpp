@@ -38,7 +38,6 @@ void ABasePaddle::Multicast_ReplicateMovement_Implementation(FVector NewLocation
 // Sets default values
 ABasePaddle::ABasePaddle()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
 	// Create a CameraComponent	
@@ -59,9 +58,6 @@ ABasePaddle::ABasePaddle()
 
 	bReplicates = true;
     AActor::SetReplicateMovement(true);
-
-	
-
 }
 
 // Called when the game starts or when spawned
@@ -74,7 +70,6 @@ void ABasePaddle::BeginPlay()
 void ABasePaddle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
